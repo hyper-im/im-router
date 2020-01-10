@@ -28,7 +28,12 @@
         "hyperf/devtool": "~1.1.0",
         "firebase/php-jwt": "^5.0",
         "hyperf/constants": "^1.1",
-        "hyperf/websocket-server": "^1.1"
+        "hyperf/websocket-server": "^1.1",
+        "hyperf/websocket-client": "^1.1",
+        "hyperf/consul": "^1.1",
+        "hyperf/service-governance": "^1.1",
+        "hyperf/json-rpc": "^1.1",
+        "hyperf/rpc-server": "^1.1"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "^4.2",

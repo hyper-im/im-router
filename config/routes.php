@@ -10,11 +10,18 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
 
-use App\Middleware\JwtMiddleware;
 use Hyperf\HttpServer\Router\Router;
 
-Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
+//Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
 
-Router::addServer('ws', function () {
-    Router::get('/', 'App\Controller\WebSocketController');
+
+Router::addServer('http', function () {
+    Router::get('/user/register', 'App\Http\Im\UserController@register');
+    Router::get('/user/login', 'App\Http\Im\UserController@login');
+    Router::get('/user/logout', 'App\Http\Im\UserController@logout');
+    Router::get('/consul', 'App\Http\Im\UserController@consul');
 });
+
+//Router::addServer('ws', function () {
+//    Router::get('/im', 'App\Ws\ImController');
+//});

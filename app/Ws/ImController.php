@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Ws;
 
 use Hyperf\Contract\OnCloseInterface;
 use Hyperf\Contract\OnMessageInterface;
@@ -26,9 +26,17 @@ use Swoole\WebSocket\Server as WebSocketServer;
  * Notes: 文件类注释说明
  * Class WebSocketController
  * @package App\Controller
+ * Im
  */
-class WebSocketController implements OnMessageInterface, OnOpenInterface, OnCloseInterface
+class ImController implements OnMessageInterface, OnOpenInterface, OnCloseInterface
 {
+
+    public function onOpen(WebSocketServer $server, Request $request): void
+    {
+        //建立连接,
+        $server->push($request->fd, 'Opened');
+    }
+
     public function onMessage(WebSocketServer $server, Frame $frame): void
     {
         $server->push($frame->fd, 'Recv: ' . $frame->data);
@@ -36,11 +44,6 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
 
     public function onClose(Server $server, int $fd, int $reactorId): void
     {
-        var_dump('closed');
-    }
-
-    public function onOpen(WebSocketServer $server, Request $request): void
-    {
-        $server->push($request->fd, 'Opened');
+        var_dump($fd.'closed');
     }
 }
