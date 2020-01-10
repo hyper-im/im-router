@@ -1,17 +1,34 @@
 <?php
-/*
- * @Description: 
- * @version: 
- * @Author: XQ <798908243@qq.com>
- * @Date: 2020-01-10 16:05:14
- * @LastEditTime : 2020-01-10 16:05:37
- */
+
 namespace App\Services;
+
+use App\Exception\ServiceException;
+use App\Lib\PasswordUtils;
+use App\Model\User;
 
 class UserService {
 
     public function register($username,$password)
     {
-        return True;
+        $user = User::query()->where('username',$username)->first();
+        if($user)
+        {
+           throw new ServiceException("用户名已被占用");
+        }
+        $userModel = new User();
+        $userModel->username = $username;
+        $password_encryption = PasswordUtils::encryptPassword($password);
+        $userModel->password_hash = $password_encryption['password_hash'];
+        $userModel->salt = $password_encryption['salt'];
+        $userModel->created_at = time();
+        $userModel->updated_at = time();
+        if($userModel->save())
+        {
+            return True;
+        }
+        else
+        {
+            return False;
+        }
     }
 }

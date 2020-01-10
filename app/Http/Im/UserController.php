@@ -15,6 +15,7 @@ namespace App\Http\Im;
 
 
 use App\Controller\AbstractController;
+use App\Services\UserService;
 use Hyperf\Consul\Client;
 use Hyperf\Di\Annotation\Inject;
 
@@ -22,8 +23,10 @@ class UserController extends AbstractController
 {
     /**
      * @Inject()
+     * @var UserService
      */
     protected $userService;
+
     /**
      * 注册
      */
@@ -31,8 +34,8 @@ class UserController extends AbstractController
 
         $username = $this->request->post("username");
         $password = $this->request->post("password");
-        $this->userService->register($username,$password);
-        return 'register';
+        $result = $this->userService->register($username,$password);
+        return $result;
     }
 
     /**
@@ -50,7 +53,6 @@ class UserController extends AbstractController
      */
     public function logout()
     {
-//        throw new DaoException();
         return 'logout';
     }
 
