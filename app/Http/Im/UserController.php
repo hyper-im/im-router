@@ -1,4 +1,5 @@
 <?php
+
 /**
  * +----------------------------------------------------------------------
  * |
@@ -19,9 +20,18 @@ use Hyperf\Consul\Client;
 class UserController extends AbstractController
 {
     /**
+     * @Inject
+     * @UserService
+     */
+    protected $userService;
+    /**
      * 注册
      */
     public function register(){
+
+        $username = $this->request->post("username");
+        $password = $this->request->post("password");
+        $this->userService->register($username,$password);
         return 'register';
     }
 
