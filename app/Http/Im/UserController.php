@@ -16,12 +16,12 @@ namespace App\Http\Im;
 
 use App\Controller\AbstractController;
 use Hyperf\Consul\Client;
+use Hyperf\Di\Annotation\Inject;
 
 class UserController extends AbstractController
 {
     /**
-     * @Inject
-     * @UserService
+     * @Inject()
      */
     protected $userService;
     /**
