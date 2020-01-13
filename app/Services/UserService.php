@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Constants\RedisKey;
 use App\Exception\ServiceException;
 use App\Exception\ValidateException;
 use App\Lib\JwtPassport;
 use App\Lib\PasswordUtils;
 use App\Model\User;
-use Mockery\Generator\StringManipulation\Pass\Pass;
+use Hyperf\Utils\ApplicationContext;
 
 class UserService {
 
@@ -71,12 +72,27 @@ class UserService {
         $passport_result = JwtPassport::checkToken($token);
         if($passport_result['code'] === 200)
         {
-            return success($passport_result['data']);
+            return $passport_result['code'];
         }
         else
         {
-            return error($passport_result['msg'],null);
+            throw new ValidateException("Passport Error");
         }
 
+    }
+
+    public function getAbleServer()
+    {
+        $container = ApplicationContext::getContainer();
+        $redis = $container->get(\Redis::class);
+        $result = $redis->hGetAll(RedisKey::IM_SERVER_LIST_KEY);
+        if(!$result)
+        {
+            throw new ServiceException("No Service Available");
+        }
+        $list = array_values($result);
+        $count = count($list);
+        $rand = mt_rand(0,$count-1);
+        return json_decode($list[$rand],true);
     }
 }

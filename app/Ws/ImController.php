@@ -14,9 +14,11 @@ declare(strict_types=1);
 
 namespace App\Ws;
 
+use App\Services\ImService;
 use Hyperf\Contract\OnCloseInterface;
 use Hyperf\Contract\OnMessageInterface;
 use Hyperf\Contract\OnOpenInterface;
+use Hyperf\Di\Annotation\Inject;
 use Swoole\Http\Request;
 use Swoole\Server;
 use Swoole\Websocket\Frame;
@@ -31,6 +33,12 @@ use Swoole\WebSocket\Server as WebSocketServer;
 class ImController implements OnMessageInterface, OnOpenInterface, OnCloseInterface
 {
 
+    /**
+     * @Inject()
+     * @var ImService
+     */
+    private $imService;
+
     public function onOpen(WebSocketServer $server, Request $request): void
     {
         //建立连接,
@@ -39,7 +47,7 @@ class ImController implements OnMessageInterface, OnOpenInterface, OnCloseInterf
 
     public function onMessage(WebSocketServer $server, Frame $frame): void
     {
-        $server->push($frame->fd, 'Recv: ' . $frame->data);
+        $this->imService->message($server,$frame);
     }
 
     public function onClose(Server $server, int $fd, int $reactorId): void

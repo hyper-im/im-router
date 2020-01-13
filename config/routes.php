@@ -25,6 +25,6 @@ Router::addServer('http', function () {
     Router::get('/im-server/user/verify_token','App\Http\Server\UserController@verifyToken');
 });
 
-//Router::addServer('ws', function () {
-//    Router::get('/im', 'App\Ws\ImController');
-//});
+Router::addServer('ws', function () {
+    Router::get('/im-router', 'App\Ws\ImController');
+});

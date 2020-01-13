@@ -50,6 +50,9 @@ class UserController extends AbstractController
             {
                 $token = $this->userService->generateToken($user);
                 $data['token'] = $token;
+                $server_info = $this->userService->getAbleServer();
+                var_dump($server_info);
+                $data = array_merge($data,$server_info);
                 return success($data);
             }
         }

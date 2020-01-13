@@ -11,6 +11,7 @@
  */
 namespace App\Http\Server;
 
+use App\Exception\ValidateException;
 use App\Services\UserService;
 use Hyperf\Di\Annotation\Inject;
 
@@ -26,7 +27,14 @@ class UserController extends ServerBaseController
     public function verifyToken()
     {
         $token = $this->request->query("token");
-        $data = $this->userService->checkToken($token);
-        return success($data);
+        try
+        {
+            $data = $this->userService->checkToken($token);
+            return success($data);
+        }catch (ValidateException $e)
+        {
+            return error($e->getMessage(),null);
+        }
+
     }
 }
