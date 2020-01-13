@@ -17,8 +17,8 @@ if(!function_exists('success')){
 }
 
 if(!function_exists('error')){
-    function error($data){
-        return Message::error('error', Message::CODE_ERROR, $data);
+    function error($msg,$data){
+        return Message::error($msg, Message::CODE_ERROR, $data);
     }
 }
 

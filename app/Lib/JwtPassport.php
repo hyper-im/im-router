@@ -18,8 +18,8 @@ class JwtPassport
     public static function getToken(array $data){
         $key = env('APP_KEY');
         $token =  array(
-                "iss" => "http://example.org",//iss:
-                "aud" => "http://example.com",//接收jwt的一方
+                "iss" => "http://hyperim.cn/send",//iss:
+                "aud" => "http://hyperim.cn/accept",//接收jwt的一方
                 "iat" => time(),// jwt的签发时间
                 "nbf" => time(),//定义在什么时间之前，某个时间点后才能访问
                 "exp" => time() + 60*60*24, // 过期时间

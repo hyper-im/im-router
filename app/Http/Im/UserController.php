@@ -15,6 +15,7 @@ namespace App\Http\Im;
 
 
 use App\Controller\AbstractController;
+use App\Exception\ServiceException;
 use App\Services\UserService;
 use Hyperf\Consul\Client;
 use Hyperf\Di\Annotation\Inject;
@@ -31,11 +32,10 @@ class UserController extends AbstractController
      * 注册
      */
     public function register(){
-
-        $username = $this->request->post("username");
-        $password = $this->request->post("password");
+        $username = $this->request->query("username");
+        $password = $this->request->query("password");
         $result = $this->userService->register($username,$password);
-        return $result;
+        return success(null);
     }
 
     /**
@@ -43,9 +43,20 @@ class UserController extends AbstractController
      */
     public function login(){
 
-        //获取consul客户端
-        $client_consul = $this->container->get(\Hyperf\Consul\KV::class);
-        return 'login';
+        $username = $this->request->query("username");
+        $password = $this->request->query("password");
+        try{
+            if($user = $this->userService->checkPassword($username,$password))
+            {
+                $token = $this->userService->generateToken($user);
+                $data['token'] = $token;
+                return success($data);
+            }
+        }
+        catch (ServiceException $e)
+        {
+            return error($e->getMessage(),null);
+        }
     }
 
     /**
