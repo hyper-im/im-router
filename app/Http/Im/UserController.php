@@ -34,7 +34,8 @@ class UserController extends AbstractController
     public function register(){
         $username = $this->request->query("username");
         $password = $this->request->query("password");
-        $result = $this->userService->register($username,$password);
+        $nickname = $this->request->query("nickname");
+        $result = $this->userService->register($username,$password,$nickname);
         return success(null);
     }
 

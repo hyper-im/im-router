@@ -37,6 +37,7 @@ class ImService
                 ];
                 $redis->hSet(RedisKey::IM_SERVER_LIST_KEY,$data['serviceName'],json_encode($server_info));
                 var_dump($redis->hGetAll(RedisKey::IM_SERVER_LIST_KEY));
+                $server->push($frame->fd,json_encode(success(null)));
                 break;
             default:
                 return false;

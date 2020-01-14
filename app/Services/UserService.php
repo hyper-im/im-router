@@ -12,7 +12,7 @@ use Hyperf\Utils\ApplicationContext;
 
 class UserService {
 
-    public function register($username,$password)
+    public function register($username,$password,$nickname)
     {
         $user = User::query()->where('username',$username)->first();
         if($user)
@@ -21,6 +21,7 @@ class UserService {
         }
         $userModel = new User();
         $userModel->username = $username;
+        $userModel->nickname = $nickname;
         $password_encryption = PasswordUtils::encryptPassword($password);
         $userModel->password_hash = $password_encryption['password_hash'];
         $userModel->salt = $password_encryption['salt'];

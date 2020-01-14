@@ -7,6 +7,7 @@ use Hyperf\DbConnection\Model\Model;
 /**
  * @property int $id 
  * @property string $username 
+ * @property string $nickname 
  * @property string $salt 
  * @property string $password_hash 
  * @property \Carbon\Carbon $created_at 
