@@ -61,7 +61,7 @@ class UserService {
             throw new ValidateException("Params Error");
         }
         $data = [
-            'user_id' => $userInfo['id'],
+            'uid' => $userInfo['id'],
             'username' => $userInfo['username'],
         ];
         $token = JwtPassport::getToken($data);
