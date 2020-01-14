@@ -73,7 +73,7 @@ class UserService {
         $passport_result = JwtPassport::checkToken($token);
         if($passport_result['code'] === 200)
         {
-            return $passport_result['code'];
+            return $passport_result['data'];
         }
         else
         {
