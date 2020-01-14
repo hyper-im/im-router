@@ -26,5 +26,5 @@ Router::addServer('http', function () {
 });
 
 Router::addServer('ws', function () {
-    Router::get('/im-router', 'App\Ws\ImController');
+    Router::get('/im-router', 'App\Ws\ServerController');
 });

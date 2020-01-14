@@ -13,15 +13,23 @@
 namespace App\Ws;
 
 
+use App\Services\AsServerService;
 use Hyperf\Contract\OnCloseInterface;
 use Hyperf\Contract\OnMessageInterface;
 use Hyperf\Contract\OnOpenInterface;
+use Hyperf\Di\Annotation\Inject;
 use Swoole\Http\Request;
 use Swoole\Websocket\Frame;
 use Swoole\WebSocket\Server;
 
 class ServerController  implements OnMessageInterface, OnOpenInterface, OnCloseInterface
 {
+
+    /**
+     * @Inject()
+     * @var AsServerService
+     */
+    private $serverService;
 
     public function onOpen(Server $server, Request $request): void
     {
@@ -31,6 +39,7 @@ class ServerController  implements OnMessageInterface, OnOpenInterface, OnCloseI
     public function onMessage(Server $server, Frame $frame): void
     {
         // TODO: Implement onMessage() method.
+        $this->serverService->message($server,$frame);
     }
 
     public function onClose(\Swoole\Server $server, int $fd, int $reactorId): void
