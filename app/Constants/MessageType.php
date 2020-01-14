@@ -5,7 +5,7 @@
  * +----------------------------------------------------------------------
  * | Copyright (c) 2020 https://github.com/hyper-im All rights reserved.
  * +----------------------------------------------------------------------
- * | Date：2020/1/13 3:58 PM
+ * | Date：2020/1/14 4:17 PM
  * | Author: Quinn (798908243@qq.com) QQ：798908243
  * +----------------------------------------------------------------------
  */
@@ -17,11 +17,25 @@ use Hyperf\Constants\AbstractConstants;
 use Hyperf\Constants\Annotation\Constants;
 
 /**
- * Class RedisKey
+ * Class MessageType
  * @package App\Constants
  * @Constants()
  */
-class RedisKey extends AbstractConstants
+class MessageType extends AbstractConstants
 {
-    const IM_SERVER_LIST_KEY = "router:im-server-list";
+
+    CONST SERVER_REGISTER = 'register_from_server';
+
+    CONST USER_REGISTER = 'register_from_user';
+
+    /**
+     * @Message("广播所有im-server");
+     */
+    CONST BROADCAST_ALL = 'server_client_broadcast';
+
+    CONST CHAT_TYPE_PRIVATE = '';
+
+    CONST CHAT_TYPE_CHANNEL = '';
+
+    CONST CHAT_TYPE_BROADCAST = '';
 }

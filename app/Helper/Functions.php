@@ -51,3 +51,20 @@ if (!function_exists('random_salt')) {
     }
 }
 
+if (!function_exists('im_encode')) {
+    function im_encode($action, $data, $from=''){
+        $data = [
+            'action' =>$action,
+            'params' => $data,
+            'from' => $from
+        ];
+        return json_encode($data);
+    }
+}
+
+if (!function_exists('im_decode')) {
+    function im_decode($data){
+        return json_decode($data);
+    }
+}
+
