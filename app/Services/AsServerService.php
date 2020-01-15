@@ -53,7 +53,7 @@ class AsServerService
                 $this->_user_register($data['params']);
                 break;
             case MessageType::BROADCAST_ALL:
-                $this->_broadcast_to_im_server($data);
+                $this->_broadcast_to_im_server($data['params']);
                 break;
             default:
                 return false;

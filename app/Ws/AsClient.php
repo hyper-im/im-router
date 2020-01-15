@@ -14,6 +14,7 @@ namespace App\Ws;
 
 
 use Hyperf\Contract\StdoutLoggerInterface;
+use Hyperf\WebSocketClient\ClientFactory;
 use Psr\Container\ContainerInterface;
 use Swoole\Coroutine\Http\Client;
 
@@ -41,25 +42,13 @@ class AsClient
     private function initClient($ip,$port)
     {
         $this->logger->debug("正在实例化Client[SERVER=".$ip.":".$port."]......");
-        go(function() use ($ip,$port){
-            $cli = new Client($ip, $port);
-            $ret = $cli->upgrade("/im");
-            if ($ret) {
-                $key = $ip.":".$port;
-                $this->client[$key] = $cli;
-                //心跳处理
-                swoole_timer_tick(3000,function ()use($cli){
-                    if($cli->errCode==0){
-                        $cli->push('',WEBSOCKET_OPCODE_PING);
-                    }
-                });
-            }
-            else
-            {
-                $this->logger->error("无法与Server[".$ip.":".$port."]建立连接");
-            }
-        });
-
+        $uri = $ip.":".$port;
+        /** @var ClientFactory $factory */
+        $factory = $this->container->get(ClientFactory::class);
+        $this->client[$uri]  = $factory->create($uri.'/im?from=im-router',false);
+//        $this->client[$uri]->setHeaders(
+//            ['Sec-WebSocket-Protocol' => 'im-route']
+//        );
     }
 
 
