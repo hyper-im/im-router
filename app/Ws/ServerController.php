@@ -35,6 +35,7 @@ class ServerController  implements OnMessageInterface, OnOpenInterface, OnCloseI
     {
         // TODO: Implement onOpen() method.
         var_dump('111111');
+
     }
 
     public function onMessage(WebSocketServer $server, Frame $frame): void
